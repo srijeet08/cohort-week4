@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react";
 
-import { useDebounce } from "../base/SearchAutocomplete/useDebounce";
-
-// import { useDebounce } from "./useDebounce";
+import { useDebounce } from "./useDebounce";
 
 const cache = {};
 
@@ -46,7 +44,7 @@ export default function SearchAutocomplete() {
     const loadSuggestions = async () => {
       try {
         setLoading(true);
-        const res = fetchSuggestions(debouncedQuery);
+        const res = await fetchSuggestions(debouncedQuery);
         cache[debouncedQuery] = res;
         setSuggestions(res);
       } catch (err) {
@@ -134,6 +132,7 @@ export default function SearchAutocomplete() {
           }}
         >
           {loading && <li style={{ padding: 8 }}>Loading...</li>}
+
           {suggestions.map((item, index) => (
             <li
               key={item}
